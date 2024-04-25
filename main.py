@@ -21,7 +21,7 @@ class Window1:
 
 if __name__ == "__main__":
   root = Tk()
-  root.configure(bg="#FFFFFF", borderwidth=20, highlightbackground="green", highlightthickness=5)
+  root.configure(bg="#FFFFFF", borderwidth=40, highlightbackground="#CCCCCC", highlightthickness=5, highlightcolor="#CCCCCC")
   root.title("window")
   Window1()
   root.mainloop()
