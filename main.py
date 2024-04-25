@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import PhotoImage
+import random
 
 def change_color():
     frame.config(bg="blue")
@@ -15,11 +16,17 @@ frame = tk.Frame(root, bg="lightgrey")
 frame.pack(pady=20)
 
 # Load the images
-image_files = ["ColorCard-image/color_card-yellow16.png", "ColorCard-image/color_card-yellow12.png", "ColorCard-image/color_card-yellow8.png"]  # Replace with your image file names
+#vars
+ori_num_cards = 1
+image_files = ["color_card-yellow16.png", "color_card-yellow12.png", "color_card-yellow8.png"]  # Replace with your image file names
 images = []
-for file in image_files:
-    image = PhotoImage(file=file)
+
+for index in range(ori_num_cards):
+    random_image_file = random.choice(image_files)
+    image_path = "ColorCard-image/" + random_image_file  # Assuming images are in "ColorCard-image" directory
+    image = PhotoImage(file=image_path)
     images.append(image)
+  
 
 # Place images in a row
 for i, image in enumerate(images):
