@@ -6,28 +6,25 @@ def change_color():
 
 def add_label():
     label = tk.Label(frame, text="New Label")
-    label.pack()
+    label.grid(row=0, column=3, padx=10)  # Adjust column as needed
 
 root = tk.Tk()
-root.geometry("400x300")
+root.geometry("500x200")
 
-frame = tk.Frame(root, bg="lightgrey", borderwidth=10, relief="ridge", padx=10, pady=10)
+frame = tk.Frame(root, bg="lightgrey")
 frame.pack(pady=20)
 
-# Load the image
-original_image = PhotoImage(file="R4_3_1-main_screen.png")
+# Load the images
+image_files = ["ColorCard-image/color_card-yellow16.png", "ColorCard-image/color_card-yellow12.png", "ColorCard-image/color_card-yellow8.png"]  # Replace with your image file names
+images = []
+for file in image_files:
+    image = PhotoImage(file=file)
+    images.append(image)
 
-# Calculate the resize factor
-original_width, original_height = original_image.width(), original_image.height()
-target_width, target_height = 200, 200
-resize_factor = min(target_width / original_width, target_height / original_height)
-
-# Resize the image
-resized_image = original_image.subsample(int(1 / resize_factor), int(1 / resize_factor))
-
-# Create a label to display the resized image
-image_label = tk.Label(frame, image=resized_image)
-image_label.pack()
+# Place images in a row
+for i, image in enumerate(images):
+    label = tk.Label(frame, image=image)
+    label.grid(row=0, column=i, padx=10)
 
 button_color = tk.Button(root, text="Change Color", command=change_color)
 button_color.pack()
