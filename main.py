@@ -3,9 +3,10 @@ from tkinter import PhotoImage
 import random
 
 root = Tk()
+root.configure(bg="#FFFFFF", borderwidth=5, highlightbackground="orange", highlightthickness=10, highlightcolor="orange") # Check Background and Border:
 
 # Create the parent frame
-parent_frame = Frame(root, bg="lightgrey", borderwidth=2, relief="ridge")
+parent_frame = Frame(root, bg="yellow", borderwidth=2, relief="ridge")
 parent_frame.pack(padx=20, pady=20)
 
 # Create the child frames
@@ -32,6 +33,7 @@ def set_player_frame(player, ori_num_cards):
     random_image_file = random.choice(image_files)
     image_files.remove(random_image_file)
     image_path = "ColorCard-image/" + random_image_file  # Assuming images are in "ColorCard-image" directory
+    print("Loading image:", image_path)  # Debugging: Print the image path
     image = PhotoImage(file=image_path)
     # Resize the image to 50x50 pixels
     image = image.subsample(2, 2)  # Adjust the subsampling factors as needed
