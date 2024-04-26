@@ -23,6 +23,7 @@ images = []
 
 for i in range(ori_num_cards):
     random_image_file = random.choice(image_files)
+    image_files.remove(random_image_file)
     image_path = "ColorCard-image/" + random_image_file  # Assuming images are in "ColorCard-image" directory
     image = PhotoImage(file=image_path)
     # Resize the image to 50x50 pixels
