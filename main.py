@@ -8,9 +8,13 @@ root = Tk()
 parent_frame = Frame(root, bg="lightgrey", borderwidth=2, relief="ridge")
 parent_frame.grid(padx=20, pady=20)
 
-# Create the child frame
+# Create the first child frame
 child_frame1 = Frame(parent_frame, bg="blue", width=200, height=200)
 child_frame1.grid(row=0, column=0, padx=10, pady=10)
+
+# Create the second child frame
+child_frame2 = Frame(parent_frame, bg="green", width=200, height=200)
+child_frame2.grid(row=0, column=1, padx=10, pady=10)
 
 # row 2 Load the images
 ori_num_cards = 16
@@ -37,9 +41,14 @@ for i in range(ori_num_cards):
     image = PhotoImage(file=image_path)
     images.append(image)
 
-# Place images in a row
-for i, image in enumerate(images):
+# Place images in the first row
+for i, image in enumerate(images[:8]):
     button_color = Button(child_frame1, image=image, command=lambda i=i: print("Button", i, "clicked"))
+    button_color.grid(row=i // 4, column=i % 4, padx=2)
+
+# Place images in the second row
+for i, image in enumerate(images[8:]):
+    button_color = Button(child_frame2, image=image, command=lambda i=i: print("Button", i+8, "clicked"))
     button_color.grid(row=i // 4, column=i % 4, padx=2)
 
 root.mainloop()
