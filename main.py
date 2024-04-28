@@ -8,39 +8,38 @@ class GamePlay:
     background = "white"
     button_font_12 = ("Arial", 12, "bold")
     num_cards = 16
+    username = "<username>"
     self.master = master
     self.images = []
     # ***** Create frame *****
     # Create the parent frame
     self.parent_frame = Frame(self.master, bg="lightgrey", borderwidth=2, relief="ridge")
     self.parent_frame.grid(padx=20, pady=20)
-    # Create the user frame
-    self.user_frame = Frame(self.parent_frame, bg="blue", width=200, height=200)
-    self.user_frame.grid(row=3, column=0, padx=10, pady=10)
-    # Create the computer frame
-    self.computer_frame = Frame(self.parent_frame, bg="green", width=200, height=200)
-    self.computer_frame.grid(row=3, column=2, padx=10, pady=10)
+    
     
     # ***** row 0 *****
     self.heading_label = Label(self.parent_frame, text="Window-Test1", font=button_font_12, fg="black", bg=background)
     self.heading_label.grid(row=0, pady=5)
     
     # ***** row 1 *****
-    # col 0
-    username_text = "<username>"
-    self.username_label = Label(self.parent_frame, text=username_text, font=button_font_12, fg="black", bg=background, wrap=250, width=40, justify="left")
-    self.username_label.grid(row=1, column=0, pady=5)
-    # col 1
-    computer_text = "program"
-    self.computer_label = Label(self.parent_frame, text=computer_text, font=button_font_12, fg="black", bg=background, wrap=250, width=40, justify="left")
-    self.computer_label.grid(row=1, column=1, pady=5)
+    
     
     # ***** row 2 ***** Load the images
-    self.create_widgets(num_cards)
+    self.create_widgets(num_cards, username)
     # ***** row 3 *****
     # ***** row 4 *****
 
-  def create_widgets(self, num_cards):
+  def create_widgets(self, num_cards, username):
+    # Create the user frame
+    bg_user_frame = "blue"
+    self.user_frame = Frame(self.parent_frame, bg=bg_user_frame, width=200, height=200)
+    self.user_frame.grid(row=3, column=0, padx=10, pady=10)
+    
+    # Create the computer frame
+    bg_computer_frame = "green"
+    self.computer_frame = Frame(self.parent_frame, bg=bg_computer_frame, width=200, height=200)
+    self.computer_frame.grid(row=3, column=2, padx=10, pady=10)
+    
     # Load the images
     image_files = [
         "color_card-blue1.png", "color_card-blue4.png", "color_card-blue6.png",
@@ -69,13 +68,18 @@ class GamePlay:
     for i, image in enumerate(self.images[:8]):
       button_color = Button(self.user_frame, image=image, command=lambda i=i: print("Button", i, "clicked"))
       button_color.image = image  # Store a reference to the PhotoImage object
-      button_color.grid(row=i // 4, column=i % 4, padx=2)
-
+      button_color.grid(row=i // 4 + 1, column=i % 4, padx=2) # add a row for name heading
     # Place images in the second row
     for i, image in enumerate(self.images[8:]):
       button_color = Button(self.computer_frame, image=image, command=lambda i=i: print("Button", i+8, "clicked"))
       button_color.image = image  # Store a reference to the PhotoImage object
-      button_color.grid(row=i // 4, column=i % 4, padx=2)
+      button_color.grid(row=i // 4 + 1, column=i % 4, padx=2) # add a row for name heading
+    # Create the user frame name tag
+    self.username_label = Label(self.user_frame, text=username, font=("Arial", 12, "bold"), bg=bg_user_frame)
+    self.username_label.grid(row=0, columnspan=4, pady=(0, 5))  # Columnspan makes the label span across all columns
+    # Create the computer frame name tag
+    self.computer_label = Label(self.computer_frame, text="Computer", font=("Arial", 12, "bold"), bg=bg_computer_frame)
+    self.computer_label.grid(row=0, columnspan=4, pady=(0, 5))
 
 if __name__ == "__main__":
   root = Tk()
