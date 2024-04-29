@@ -56,18 +56,18 @@ class GamePlay:
     # Place images in the first row
     for i, image in enumerate(self.images[:8]):
       button_color = Button(
-        self.user_frame,
-        image=image,
-        command=lambda button=button_color, card=image_files[i][1]: self.card_action("user", card, button))
+          self.user_frame,
+          image=image,
+          command=lambda i=i, card=image_files[i][1]: self.card_action("user", card, self.user_frame.grid_slaves()[i]))
       button_color.image = image  # Store a reference to the PhotoImage object
       button_color.grid(row=i // 4 + 1, column=i % 4, padx=2) # add a row for name heading
     
     # Place images in the second row
     for i, image in enumerate(self.images[8:]):
       button_color = Button(
-        self.computer_frame,
-        image=image,
-        command=lambda button=button_color, card=image_files[i + 8][1]: self.card_action("computer", card, button))
+          self.computer_frame,
+          image=image,
+          command=lambda i=i, card=image_files[i + 8][1]: self.card_action("computer", card, self.computer_frame.grid_slaves()[i]))
       button_color.image = image  # Store a reference to the PhotoImage object
       button_color.grid(row=i // 4 + 1, column=i % 4, padx=2) # add a row for name heading
     
