@@ -81,7 +81,10 @@ class GamePlay:
   def card_action(self, player, card, button):
     image_path = "ColorCard-image/color_card-back_card.png"
     back_card_image = PhotoImage(file=image_path)
+    # Resize the image to 50x50 pixels
+    back_card_image = back_card_image.subsample(2, 2)
     button.config(image=back_card_image) # Use 'image' parameter directly
+    button.grid_forget()  # Remove the button from its parent frame
     if player == "user": 
       action = "user pick" + card
     else:
