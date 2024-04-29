@@ -55,13 +55,19 @@ class GamePlay:
 
     # Place images in the first row
     for i, image in enumerate(self.images[:8]):
-      -
+      button_color = Button(
+        self.user_frame,
+        image=image,
+        command=lambda button=button_color, card=image_files[i][1]: self.card_action("user", card, button))
       button_color.image = image  # Store a reference to the PhotoImage object
       button_color.grid(row=i // 4 + 1, column=i % 4, padx=2) # add a row for name heading
     
     # Place images in the second row
     for i, image in enumerate(self.images[8:]):
-      button_color = Button(self.computer_frame, image=image, command=lambda button=self.computer_frame.grid_slaves()[i]: self.card_action("computer", image_files[i][1], button))
+      button_color = Button(
+        self.computer_frame,
+        image=image,
+        command=lambda button=button_color, card=image_files[i + 8][1]: self.card_action("computer", card, button))
       button_color.image = image  # Store a reference to the PhotoImage object
       button_color.grid(row=i // 4 + 1, column=i % 4, padx=2) # add a row for name heading
     
@@ -72,10 +78,10 @@ class GamePlay:
     self.computer_label = Label(self.computer_frame, text="Computer", font=("Arial", 12, "bold"), bg=bg_computer_frame)
     self.computer_label.grid(row=0, columnspan=4, pady=(0, 5))
     
-  def card_action(self, player, card, image):
+  def card_action(self, player, card, button):
     image_path = "ColorCard-image/color_card-back_card.png"
     back_card_image = PhotoImage(file=image_path)
-    image.config(image=back_card_image) # Use 'image' parameter directly
+    button.config(image=back_card_image) # Use 'image' parameter directly
     if player == "user": 
       action = "user pick" + card
     else:
