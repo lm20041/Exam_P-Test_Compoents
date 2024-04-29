@@ -58,18 +58,22 @@ class GamePlay:
       button_color = Button(
           self.user_frame,
           image=image,
-          command=lambda i=i, card=image_files[i][1]: self.card_action("user", card, self.user_frame.grid_slaves()[i]))
+          command=lambda i=i, card=image_files[i][1]: self.card_action("user", card, i))
       button_color.image = image  # Store a reference to the PhotoImage object
-      button_color.grid(row=i // 4 + 1, column=i % 4, padx=2) # add a row for name heading
+      button_color.grid(row=i // 4 + 1, column=i % 4) # add a row for name heading
+      button_color.id = i  # Assigning button ID
+      self.button_ids.append(i)  # Storing button IDs
     
     # Place images in the second row
     for i, image in enumerate(self.images[8:]):
       button_color = Button(
           self.computer_frame,
           image=image,
-          command=lambda i=i, card=image_files[i + 8][1]: self.card_action("computer", card, self.computer_frame.grid_slaves()[i]))
+          command=lambda i=i, card=image_files[i + 8][1]: self.card_action("computer", card, i+8))
       button_color.image = image  # Store a reference to the PhotoImage object
-      button_color.grid(row=i // 4 + 1, column=i % 4, padx=2) # add a row for name heading
+      button_color.grid(row=i // 4 + 1, column=i % 4) # add a row for name heading
+      button_color.id = i + 8  # Assigning button ID
+      self.button_ids.append(i + 8)  # Storing button IDs
     
     # Create the user frame name tag
     self.username_label = Label(self.user_frame, text=username, font=("Arial", 12, "bold"), bg=bg_user_frame)
@@ -78,18 +82,23 @@ class GamePlay:
     self.computer_label = Label(self.computer_frame, text="Computer", font=("Arial", 12, "bold"), bg=bg_computer_frame)
     self.computer_label.grid(row=0, columnspan=4, pady=(0, 5))
     
-  def card_action(self, player, card, button):
+  def card_action(self, player, card, button_id):
     image_path = "ColorCard-image/color_card-back_card.png"
     back_card_image = PhotoImage(file=image_path)
     # Resize the image to 50x50 pixels
     back_card_image = back_card_image.subsample(2, 2)
     button.config(image=back_card_image) # Use 'image' parameter directly
-    button.grid_forget()  # Remove the button from its parent frame
-    if player == "user": 
-      action = "user pick" + card
-    else:
-      action = "computer pick" + card
-    print(action)
+    # Find the button using its ID
+    if button_id in self.button_ids:
+      button = self.user_frame.grid_slaves(row=button_id // 4 + 1, column=button_id % 4)[0]
+      button.config(image=back_card_image)  # Use 'image' parameter directly
+      button.grid_forget()  # Remove the button from its parent frame
+
+      if player == "user":
+        action = "user pick" + card
+      else:
+        action = "computer pick" + card
+      print(action)
 
 if __name__ == "__main__":
   root = Tk()
