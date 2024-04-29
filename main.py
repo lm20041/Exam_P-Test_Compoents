@@ -55,14 +55,16 @@ class GamePlay:
 
     # Place images in the first row
     for i, image in enumerate(self.images[:8]):
-      button_color = Button(self.user_frame, image=image, command=lambda i=i: self.card_action("user", image_files[i][1], image))
+      -
       button_color.image = image  # Store a reference to the PhotoImage object
       button_color.grid(row=i // 4 + 1, column=i % 4, padx=2) # add a row for name heading
+    
     # Place images in the second row
     for i, image in enumerate(self.images[8:]):
-      button_color = Button(self.computer_frame, image=image, command=lambda i=i: self.card_action("computer", image_files[i][1], image))
+      button_color = Button(self.computer_frame, image=image, command=lambda button=self.computer_frame.grid_slaves()[i]: self.card_action("computer", image_files[i][1], button))
       button_color.image = image  # Store a reference to the PhotoImage object
       button_color.grid(row=i // 4 + 1, column=i % 4, padx=2) # add a row for name heading
+    
     # Create the user frame name tag
     self.username_label = Label(self.user_frame, text=username, font=("Arial", 12, "bold"), bg=bg_user_frame)
     self.username_label.grid(row=0, columnspan=4, pady=(0, 5))  # Columnspan makes the label span across all columns
@@ -73,7 +75,7 @@ class GamePlay:
   def card_action(self, player, card, image):
     image_path = "ColorCard-image/color_card-back_card.png"
     back_card_image = PhotoImage(file=image_path)
-    self.button_color.config(image=back_card_image)
+    image.config(image=back_card_image) # Use 'image' parameter directly
     if player == "user": 
       action = "user pick" + card
     else:
